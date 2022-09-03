@@ -24,14 +24,18 @@ router.get('/', (req, res) => {
         if (err) return next(err);
         res.render("../views/list", {list: student});
     });
+    //res.render("students", { list: ["ankit", "suraj", "prashant", "ravi"] });
 });
 
 router.get('/:id', (req, res) => {
     var id = req.params.id;
     student.findById(id, (err, student) => {
         if (err) return next(err);
-        res.render("../views/single", {list: student});
+        res.render("../views/single", {student: student});
     });
+    //res.render("studentDetail", {
+    //student: { name: "rahul", email: "rahul@altcampus.io" },
+    //});
 });
 
 
