@@ -20,6 +20,10 @@ var app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(logger('dev'));
+app.use((req, res, next) => {
+    console.log(req.body);
+    next();
+}) ;
 
 
 //setup ejs

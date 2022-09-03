@@ -1,25 +1,26 @@
 var express = require('express');
 var router = express.Router();
+var user = require('../model/user');
 
 
 router.get('/new', (req, res) => {
-    console.log('hi')
     res.render('../views/userForm');
 });
 
-
-router.get('/', (req, res) => {
-    user.find({}, (err, user) => {
-        if(err) return next(err);
-        res.render('../views/users', {list: user});
+router.post('/new', (req, res) => {
+    user.create(req.body, (err, user) => {
+        if (err) return next(err);
+        res.json(user);
     });
 });
+
+
 
 router.get('/:id', (req, res) => {
     var id = req.params.id;
     user.findById(id, (err, user) => {
         if(err) return next(err);
-        res.render('../views/singleUsers', {user: user});
+        res.render('../views/singleUser', {user: user});
     });
 });
 
@@ -36,6 +37,14 @@ router.put('/:id', (req, res) => {
     user.findById(id, {new: true}, (err, user) => {
         if(err) return next(err);
         res.json(`${user} updated`);
+    });
+});
+
+
+router.get('/', (req, res) => {
+    user.find({}, (err, user) => {
+        if(err) return next(err);
+        res.render('../views/users', {user: user});
     });
 });
 
